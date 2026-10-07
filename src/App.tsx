@@ -60,7 +60,7 @@ const App = () => {
           {projects && (
             <motion.section 
               id="projects-section"
-              className="min-h-screen py-10 px-6"
+              className="min-h-screen py-10 px-6 w-full scroll-mt-24"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1 }}

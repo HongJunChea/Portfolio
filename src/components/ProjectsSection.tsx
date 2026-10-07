@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard from "./ProjectCard";
 import { project } from "../utils/projects";
 import { ProjectCategory } from "../utils/projects";
-import { FaCube, FaGamepad, FaGlobe, FaLayerGroup } from "react-icons/fa";
+import { FaCube, FaGamepad, FaGlobe, FaLayerGroup, FaMobileAlt, FaBrain, FaMicrochip, FaVrCardboard } from "react-icons/fa";
 
 const categories: Array<{
   id: ProjectCategory | "all";
@@ -14,6 +14,10 @@ const categories: Array<{
   { id: ProjectCategory.GAMES, name: "Games", icon: <FaGamepad /> },
   { id: ProjectCategory.WEB, name: "Web", icon: <FaGlobe /> },
   { id: ProjectCategory.GRAPHICS, name: "Graphics", icon: <FaCube /> },
+  { id: ProjectCategory.MOBILE, name: "Mobile", icon: <FaMobileAlt /> },
+  { id: ProjectCategory.AI, name: "AI", icon: <FaBrain /> },
+  { id: ProjectCategory.SYSTEMS, name: "Systems", icon: <FaMicrochip /> },
+  { id: ProjectCategory.VR, name: "VR", icon: <FaVrCardboard /> },
 ];
 
 const projectHasCategory = (
@@ -72,6 +76,7 @@ const ProjectsSection = ({ projects }: { projects: project[] }) => {
         <div className="relative">
           <input
             type="text"
+            aria-label="Search projects"
             placeholder="Search projects by title, description, or tags..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -89,6 +94,7 @@ const ProjectsSection = ({ projects }: { projects: project[] }) => {
             <motion.button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
+              aria-pressed={selectedCategory === category.id}
               className={`px-4 py-2 rounded-full border transition-all duration-300 flex items-center gap-2 font-tech ${
                 selectedCategory === category.id
                   ? "glass-strong border-neon-blue text-neon-blue shadow-lg shadow-neon-blue/25 neon-text"

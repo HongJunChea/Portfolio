@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { projects } from "../utils/projects";
-import { FaArrowLeft, FaExternalLinkAlt, FaGithub } from "react-icons/fa";
+import { projects, ProjectCategory } from "../utils/projects";
+import { FaArrowLeft, FaExternalLinkAlt, FaGithub, FaPlay } from "react-icons/fa";
 import { useEffect } from "react";
 
 const ProjectDetail = () => {
@@ -48,7 +48,7 @@ const ProjectDetail = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-5xl font-cyber font-black text-neon-blue neon-text mb-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl break-words font-cyber font-black text-neon-blue neon-text mb-4">
               {project.title}
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-cyan mb-8"></div>
@@ -64,7 +64,7 @@ const ProjectDetail = () => {
               <img 
                 src={project.cover || `${import.meta.env.BASE_URL}assets/projects/placeholder.png`} 
                 alt={project.title}
-                className="w-full h-full object-cover"
+                className={`w-full h-full ${project.screenshots?.length ? "max-h-[640px] object-contain bg-deep-space p-4" : "object-cover"}`}
               />
             </div>
 
@@ -90,7 +90,18 @@ const ProjectDetail = () => {
                 </div>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
+                {project.video_link && (
+                  <a
+                    href={project.video_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 btn-futuristic flex items-center justify-center gap-2"
+                  >
+                    <FaPlay />
+                    <span>Watch Demo</span>
+                  </a>
+                )}
                 {project.deploy_link && project.deploy_link !== "#" && (
                   <motion.a
                     href={project.deploy_link}
@@ -120,6 +131,108 @@ const ProjectDetail = () => {
               </div>
             </div>
           </motion.div>
+
+          {project.presentation && (
+            <section className="glass-strong rounded-xl p-6 sm:p-8 border border-neon-cyan/30 mb-12" aria-label="Research presentation">
+              <div className="flex flex-wrap items-center gap-3 mb-4">
+                <h2 className="text-2xl sm:text-3xl font-cyber text-neon-cyan">Research Presentation</h2>
+                <span className="px-3 py-1 rounded-full text-sm font-tech text-neon-cyan bg-neon-cyan/10 border border-neon-cyan/30">
+                  {project.presentation.role}
+                </span>
+              </div>
+              <h3 className="text-xl font-cyber text-neon-blue mb-3">{project.presentation.event}</h3>
+              <p className="text-gray-300 font-futura leading-relaxed mb-6">
+                Presented this research on personality-modulated NPC emotion dynamics for game dialogue at the symposium.
+              </p>
+              <dl className="grid sm:grid-cols-2 gap-4 mb-6 font-futura">
+                <div>
+                  <dt className="text-sm text-neon-cyan font-tech mb-1">Event Dates</dt>
+                  <dd className="text-gray-300">{project.presentation.dates}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-neon-cyan font-tech mb-1">Location</dt>
+                  <dd className="text-gray-300">{project.presentation.venue}</dd>
+                </div>
+              </dl>
+              <a href={project.presentation.certificateUrl} target="_blank" rel="noopener noreferrer" className="btn-futuristic inline-flex items-center gap-2">
+                <FaExternalLinkAlt /> View Certificate
+              </a>
+            </section>
+          )}
+
+          {project.evaluation && (
+            <section className="space-y-8 mb-12" aria-label="Research and evaluation">
+              <div className="glass-strong rounded-xl p-6 border border-neon-blue/20">
+                <h2 className="text-2xl font-cyber text-neon-cyan mb-4">My Contribution</h2>
+                <p className="text-gray-300 font-futura leading-relaxed">{project.evaluation.contribution}</p>
+              </div>
+              <div className="glass-strong rounded-xl p-6 border border-neon-blue/20">
+                <h2 className="text-2xl font-cyber text-neon-cyan mb-4">Methodology</h2>
+                <ul className="list-disc pl-5 space-y-3 text-gray-300 font-futura leading-relaxed">
+                  {project.evaluation.methodology.map(item => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+              <div>
+                <h2 className="text-3xl font-cyber text-neon-blue neon-text mb-6">Evaluation Results</h2>
+                <div className="space-y-6">
+                  {[
+                    { label: "Overall test set", samples: project.evaluation.testSamples, rows: project.evaluation.results },
+                    { label: "Boundary ages 18–24", samples: project.evaluation.boundarySamples, rows: project.evaluation.boundaryResults }
+                  ].map(group => (
+                    <div key={group.label} className="glass-strong rounded-xl p-4 sm:p-6 border border-neon-blue/20">
+                      <div className="overflow-x-auto">
+                        <table className="w-full min-w-[560px] text-left font-futura text-gray-300">
+                          <caption className="text-left text-neon-cyan font-tech mb-4">
+                            {group.label} · {group.samples.toLocaleString("en-US")} images
+                          </caption>
+                          <thead>
+                            <tr className="border-b border-neon-blue/30 text-neon-cyan">
+                              {["Model", "Accuracy (%)", "Precision (%)", "Recall (%)", "F1 (%)"].map(label => (
+                                <th key={label} scope="col" className="p-3 text-sm">{label}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {group.rows.map(row => (
+                              <tr key={row.model} className={`border-b border-neon-blue/10 ${row.model === "ViT" ? "bg-neon-blue/10" : ""}`}>
+                                <th scope="row" className="p-3 font-medium">{row.model}</th>
+                                {[row.accuracy, row.precision, row.recall, row.f1].map((value, index) => (
+                                  <td key={index} className="p-3 tabular-nums">{value.toFixed(2)}</td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-gray-300 font-futura leading-relaxed mt-6">{project.evaluation.findings}</p>
+              </div>
+              <div className="glass-strong rounded-xl p-6 border border-neon-blue/20">
+                <h2 className="text-2xl font-cyber text-neon-cyan mb-4">Limitations &amp; Next Steps</h2>
+                <ul className="list-disc pl-5 space-y-3 text-gray-300 font-futura leading-relaxed">
+                  {project.evaluation.limitations.map(item => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+            </section>
+          )}
+
+          {project.screenshots && project.screenshots.length > 0 && (
+            <section className="mb-12" aria-label="Project screenshots">
+              <h2 className="text-2xl font-cyber text-neon-cyan mb-6">Project Screenshots</h2>
+              <div className={`grid gap-6 ${project.categories?.includes(ProjectCategory.MOBILE) ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
+                {project.screenshots.map(screenshot => (
+                  <figure key={screenshot.src} className="glass-strong rounded-xl p-4 border border-neon-blue/20">
+                    <a href={screenshot.src} target="_blank" rel="noopener noreferrer" aria-label={`View full-size screenshot: ${screenshot.label}`}>
+                      <img src={screenshot.src} alt={`${project.title} — ${screenshot.label}`} className="w-full max-h-[560px] object-contain rounded-lg" loading="lazy" />
+                    </a>
+                    <figcaption className="text-center text-neon-cyan font-tech mt-4">{screenshot.label}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </section>
+          )}
 
           {project.features && project.features.length > 0 && (
             <motion.div

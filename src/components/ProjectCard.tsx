@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ProjectType } from "../types";
 import { cn } from "../lib/utils";
 import { Link } from "react-router-dom";
+import { ProjectCategory } from "../utils/projects";
 
 export default function ProjectCard({ project }: { project: ProjectType }) {
   return (
@@ -20,12 +21,25 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
       <div className="absolute inset-0 scan-line opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
 
       <div className="relative overflow-hidden flex-shrink-0 h-52 w-full">
+        {project.screenshots?.length && project.categories?.includes(ProjectCategory.MOBILE) ? (
+          <div className="flex h-full justify-center gap-3 bg-deep-space p-3">
+            {project.screenshots.map(screenshot => (
+              <img
+                key={screenshot.src}
+                src={screenshot.src}
+                alt={`${project.title} — ${screenshot.label}`}
+                className="h-full min-w-0 rounded-md object-contain"
+              />
+            ))}
+          </div>
+        ) : (
         <motion.img
           src={project.cover || `${import.meta.env.BASE_URL}assets/projects/placeholder.png`}
           alt={project.title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           whileHover={{ scale: 1.1 }}
         />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-deep-space/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
         <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
@@ -40,7 +54,7 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
           className="block group/title"
         >
           <motion.h3 
-            className="text-xl font-cyber font-bold text-neon-blue mb-3 group-hover/title:text-neon-cyan transition-colors duration-300 line-clamp-2 overflow-hidden neon-text"
+            className={cn("font-cyber font-bold text-neon-blue mb-3 group-hover/title:text-neon-cyan transition-colors duration-300 overflow-hidden neon-text", project.title.length > 50 ? "text-lg line-clamp-3" : "text-xl line-clamp-2")}
             whileHover={{ x: 5 }}
           >
             {project.title}
