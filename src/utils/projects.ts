@@ -1,19 +1,14 @@
 export enum ProjectCategory {
   GAMES = "games",
-  WEB = "web",
+  DESKTOP = "desktop",
   GRAPHICS = "graphics",
   MOBILE = "mobile",
   AI = "ai",
-  SYSTEMS = "systems",
-  VR = "vr"
+  VR = "vr",
 }
 
 export enum CodeLinkIcon {
-  FRONTEND = "🎨",
-  BACKEND = "⚙️",
-  CLI = "💻",
-  FULLSTACK = "🌐",
-  TOOLS = "🛠️"
+  SOURCE = "source",
 }
 
 export interface CodeLink {
@@ -28,14 +23,6 @@ export interface ModelResult {
   precision: number;
   recall: number;
   f1: number;
-}
-
-export interface ProjectPresentation {
-  event: string;
-  role: string;
-  dates: string;
-  venue: string;
-  certificateUrl: string;
 }
 
 export interface ProjectEvaluation {
@@ -64,265 +51,251 @@ export interface project {
   features?: string[];
   techDetails?: string[];
   evaluation?: ProjectEvaluation;
-  presentation?: ProjectPresentation;
+  featured?: boolean;
+  collaboration?: string;
+  contribution?: string;
 }
+
+const asset = (path: string) => `${import.meta.env.BASE_URL}assets/projects/${path}`;
 
 export const projects: project[] = [
   {
-    id: "parallel-qoi",
-    title: "Parallel QOI",
-    cover: `${import.meta.env.BASE_URL}assets/projects/parallel-qoi-convert.png`,
-    screenshots: [
-      { src: `${import.meta.env.BASE_URL}assets/projects/parallel-qoi-convert.png`, label: "Convert: source and decoded-pixel validation" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/parallel-qoi-compare.png`, label: "Compare: backend configuration and performance metrics" }
-    ],
-    tags: ["c++", "cuda", "openmp", "mpi", "electron", "react", "pdc"],
-    code_links: [{ label: "GitHub", url: "https://github.com/KJiShou/parallel-qoi", icon: CodeLinkIcon.CLI }],
+    id: "chichis-bizarre-adventure",
+    title: "Chichi’s Bizarre Adventure",
+    cover: asset("3D-Game.png"),
+    screenshots: [{ src: asset("3D-Game.png"), label: "Third-person island adventure and puzzle exploration" }],
+    tags: ["Unity", "C#", "URP", "Cinemachine", "Input System"],
+    code_links: [{ label: "GitHub", url: "https://github.com/KJiShou/3D-Game-Development", icon: CodeLinkIcon.SOURCE }],
     deploy_link: "#",
-    desc: "A two-pass, lossless QOI encoder comparing OpenMP, CUDA, and MPI against a Serial baseline, with an Electron dashboard.",
-    longDesc: "A Parallel and Distributed Computing group project that tackles QOI's sequential state dependencies with a two-pass method. Segments first summarize state changes; ordered propagation then prepares their entry states for concurrent encoding and ordered output assembly. The result is a standards-compliant .qoi file. A React and Electron dashboard supports image conversion, decoded previews, and backend comparisons. The project report validates all 2,848 images per evaluated backend and separates Pass 2 performance from complete pipeline costs, including state propagation, transfers, and communication.",
-    categories: [ProjectCategory.SYSTEMS],
-    features: ["Standards-compliant lossless RGB/RGBA QOI encoding", "Serial baseline and OpenMP, CUDA, and MPI backends", "Two-pass state summaries, entry-state propagation, and parallel encoding", "Convert interface with source and decoded-image pixel validation", "Compare interface with runtime, throughput, and phase breakdown charts", "Reproducible tuning and full-suite evaluation on 2,848 images per backend"],
-    techDetails: ["C++ native backends built with CMake", "OpenMP shared-memory parallelism and MPI process communication", "CUDA device-side state propagation, CUB prefix scan, and payload compaction", "Ordered variable-length output assembly and official-decoder pixel validation", "Electron main process runs native executables; React presents JSON results", "Benchmark timing excludes dashboard rendering and distinguishes Pass 2 from the core pipeline"]
+    desc: "A multi-level third-person adventure combining parkour, combat, puzzles, collectibles, and persistent progression.",
+    longDesc: "A three-person Unity project built around island exploration and a search for a missing friend. I contributed across gameplay and presentation systems, including knockback, portals, pressure plates, moving platforms, lifts, gates, keypad interactions, UI, audio, narrator and tutorial triggers, cutscenes, and win/lose scenes.",
+    categories: [ProjectCategory.GAMES],
+    featured: true,
+    collaboration: "Three-person team",
+    contribution: "Gameplay systems, level interactions, UI & audio",
+    features: [
+      "Third-person exploration, parkour traversal, combat, and resource collection",
+      "Multi-level progression with checkpoints, cutscenes, puzzles, and persistent state",
+      "Environmental interactions including portals, pressure plates, platforms, lifts, gates, and keypads",
+      "Narration, tutorial triggers, sound effects, and win/lose flows",
+    ],
+    techDetails: [
+      "Unity URP project written in C#",
+      "Cinemachine and Unity Input System for third-person control",
+      "Timeline-driven cutscenes and scene management",
+      "PlayerPrefs-backed progression and UI state",
+      "77 GitHub contributions under HongJunChea in the shared repository",
+    ],
+  },
+  {
+    id: "initial-cpp",
+    title: "Initial C++",
+    cover: asset("initial-cpp-gameplay.png"),
+    screenshots: [
+      { src: asset("initial-cpp-gameplay.png"), label: "Arcade racing gameplay with collectibles and obstacles" },
+      { src: asset("initial-cpp-menu.png"), label: "Main menu and scene flow" },
+    ],
+    tags: ["C++", "DirectX 9", "CMake", "Collision", "Audio"],
+    code_links: [{ label: "GitHub", url: "https://github.com/zwzenre/CGPassignment", icon: CodeLinkIcon.SOURCE }],
+    deploy_link: "#",
+    desc: "A fast-paced 2D arcade racing game with car controls, obstacles, collectibles, timing, scenes, music, and sound effects.",
+    longDesc: "A three-person C++ and DirectX 9 project about delivering tofu quickly while avoiding obstacles and collecting coins. My commits cover the main-menu scene, early car and physics work, scene sizing and button hit areas, Sound Manager integration, background music transitions, car and goal sounds, and level fixes.",
+    categories: [ProjectCategory.GAMES, ProjectCategory.GRAPHICS],
+    featured: true,
+    collaboration: "Three-person team",
+    contribution: "Main menu, car/physics foundations & audio integration",
+    features: [
+      "Arcade car controls with obstacles, collectibles, and timer-based scoring",
+      "Multiple scenes for menu, gameplay, stage selection, and results",
+      "Background music and contextual car, goal, and UI sound effects",
+      "Modular managers for input, physics, scenes, sound, and timing",
+    ],
+    techDetails: [
+      "C++ game loop and DirectX 9 rendering",
+      "CMake-based project organization",
+      "Custom collision detection and physics components",
+      "Sound Manager with scene-aware music and effects",
+      "25 GitHub contributions under HongJunChea in the shared repository",
+    ],
+  },
+  {
+    id: "travel-planner",
+    title: "Travel Planner Assistant",
+    cover: asset("travel-planner-main.png"),
+    screenshots: [
+      { src: asset("travel-planner-main.png"), label: "Main menu" },
+      { src: asset("travel-planner-itinerary.png"), label: "Itinerary builder" },
+      { src: asset("travel-planner-packing.png"), label: "Packing-list generator and progress tracking" },
+    ],
+    tags: ["Python", "Tkinter", "JSON", "MVC"],
+    code_links: [{ label: "GitHub", url: "https://github.com/HongJunChea/TravelPlannerAssistant", icon: CodeLinkIcon.SOURCE }],
+    deploy_link: "#",
+    desc: "A desktop trip-planning suite for itineraries, packing lists, and budget estimates with JSON persistence.",
+    longDesc: "A cross-platform Python desktop application co-developed in a four-person team. I redesigned and refined the GUI, implemented packing-list generation, refactored JSON storage, and fixed persistence issues affecting saved checklist progress and trip names.",
+    categories: [ProjectCategory.DESKTOP],
+    featured: true,
+    collaboration: "Four-person team",
+    contribution: "GUI redesign, packing-list generation & persistence fixes",
+    features: [
+      "Daily itinerary creation with destinations, activities, dates, and times",
+      "Automatic packing-list generation with categorized items and progress tracking",
+      "Budget allocation and expense estimation across travel categories",
+      "Saved itineraries and budgets using local JSON files",
+    ],
+    techDetails: [
+      "Python 3.11 and Tkinter desktop UI",
+      "MVC-style separation across models, controllers, GUI, and utilities",
+      "JSON-based local persistence",
+      "23 GitHub contributions under HongJunChea",
+    ],
   },
   {
     id: "cgt-assignment",
-    title: "Personality-Modulated NPC Emotion Dynamics for Game Dialogue",
-    presentation: {
-      event: "International Joint Student Research Symposium 2026",
-      role: "Presenter",
-      dates: "21–25 September 2026",
-      venue: "BINUS University, Indonesia",
-      certificateUrl: `${import.meta.env.BASE_URL}assets/certificates/ijsrs-2026-presenter.pdf`
-    },
-    cover: `${import.meta.env.BASE_URL}assets/projects/npc-emotion-dialogue.png`,
+    title: "Personality-Modulated NPC Emotion Dynamics",
+    cover: asset("npc-emotion-dialogue.png"),
     screenshots: [
-      { src: `${import.meta.env.BASE_URL}assets/projects/npc-emotion-dialogue.png`, label: "Positive dialogue and real-time NPC emotional feedback" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/npc-emotion-response.png`, label: "Negative dialogue with current emotion and long-term mood" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/npc-emotion-settings.png`, label: "Emotion memory, decay settings, and input validation" }
+      { src: asset("npc-emotion-dialogue.png"), label: "Dialogue input and real-time emotion feedback" },
+      { src: asset("npc-emotion-response.png"), label: "Current emotion and long-term mood display" },
+      { src: asset("npc-emotion-settings.png"), label: "Emotion memory and configuration panel" },
     ],
-    tags: ["unity", "c#", "ai", "vad", "big five", "sentis", "navmesh"],
-    code_links: [{ label: "GitHub", url: "https://github.com/KJiShou/CGT-Assignment", icon: CodeLinkIcon.TOOLS }],
+    tags: ["Unity", "C#", "RoBERTa", "VAD", "Big Five"],
+    code_links: [{ label: "GitHub", url: "https://github.com/KJiShou/CGT-Assignment", icon: CodeLinkIcon.SOURCE }],
     deploy_link: "#",
-    desc: "A Unity dialogue prototype where Big Five personality, conversational context, and emotional memory shape NPC reactions.",
-    longDesc: "A Unity-based group research prototype for personality-modulated NPC emotions in natural-language game dialogue. Player utterances are encoded into Valence-Arousal-Dominance (VAD) values, smoothed against recent dialogue, and modulated by the NPC's Big Five (OCEAN) personality. Timestamped emotional memory and configurable decay combine immediate reactions with a persistent mood. Centroid-based classification maps the continuous state to emotion labels for animation and visual feedback. The study reports identical outputs across three trials for each of 20 profile-input conditions, while different personalities produce distinct response intensities. Longer sessions revealed memory growth, making memory management and larger multi-NPC evaluations areas for future work.",
+    desc: "An AI game prototype where dialogue sentiment, personality, context, and emotional memory shape NPC reactions.",
+    longDesc: "A collaborative Unity research prototype combining NavMesh character behaviour with emotion-driven animations and visual feedback. My work included integrating a RoBERTa sentiment model through Unity Inference Engine, mapping dialogue into Valence-Arousal-Dominance values, modelling Big Five personality and emotion decay, and implementing the emoji particle feedback system.",
     categories: [ProjectCategory.GAMES, ProjectCategory.AI],
-    features: ["Natural-language player dialogue converted into continuous VAD values", "Big Five personality profiles modulate emotional sensitivity", "Dialogue-context smoothing reduces abrupt emotional changes", "Time-decayed emotional memory and configurable long-term mood", "Real-time emotion rankings, VAD indicators, and personality radar", "Configurable emotion categories, animation feedback, and input validation"],
-    techDetails: ["Unity URP and C# gameplay components", "Sentiment-based TwitterSentimentVAD pipeline with Unity inference", "Exponential moving average for dialogue-context smoothing", "OCEAN-to-VAD sensitivity mapping and timestamped emotion memory", "Centroid-distance emotion classification with softmax normalization", "NavMesh character movement and Animator / emoji presentation"]
+    collaboration: "Three-person research team",
+    contribution: "Sentiment/VAD pipeline, personality-memory model & emotion particles",
+    features: [
+      "Natural-language dialogue mapped to continuous VAD emotion values",
+      "Big Five traits modulate each NPC’s emotional response",
+      "Short- and long-term emotional memory with configurable decay",
+      "NavMesh movement, emotion-driven animation, and emoji particle feedback",
+    ],
+    techDetails: [
+      "Unity, C#, AI Navigation, and Unity Inference Engine",
+      "RoBERTa sentiment inference and VAD emotion modelling",
+      "Big Five personality parameters and configurable emotion states",
+      "13 GitHub contributions under HongJunChea in the shared repository",
+    ],
   },
   {
     id: "vr-assignment",
     title: "The Climb3",
-    cover: `${import.meta.env.BASE_URL}assets/projects/vr-menu.png`,
+    cover: asset("vr-menu.png"),
     screenshots: [
-      { src: `${import.meta.env.BASE_URL}assets/projects/vr-menu.png`, label: "Main menu — 00:22" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/vr-climbing.png`, label: "Castle level traversal — 10:52" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/vr-grabbing.png`, label: "VR hand grabbing — 10:30" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/vr-results.png`, label: "Stage leaderboard — 13:30" }
+      { src: asset("vr-menu.png"), label: "VR main menu" },
+      { src: asset("vr-climbing.png"), label: "Castle climbing and checkpoint progression" },
+      { src: asset("vr-grabbing.png"), label: "Hand grabbing and food interaction" },
+      { src: asset("vr-results.png"), label: "Win scene and stage results" },
     ],
-    tags: ["unity", "c#", "vr", "openxr", "xr interaction toolkit"],
-    code_links: [{ label: "GitHub", url: "https://github.com/KJiShou/VR-Assignment", icon: CodeLinkIcon.TOOLS }],
+    tags: ["Unity", "C#", "OpenXR", "XR Toolkit", "VR"],
+    code_links: [{ label: "GitHub", url: "https://github.com/KJiShou/VR-Assignment", icon: CodeLinkIcon.SOURCE }],
     deploy_link: "#",
     video_link: "https://youtu.be/MqeesJxqzsM",
-    desc: "An interactive VR experience combining climbing, stamina management, object interaction, and painting.",
-    longDesc: "A Unity virtual reality assignment with climbing mechanics, checkpoints, hand stamina feedback, and timed progression. Interaction systems include grabbable objects and painting tools with a color palette and eraser. Built with XR Interaction Toolkit and OpenXR support.",
+    desc: "A VR climbing experience with stamina, checkpoints, grabbable objects, food interactions, painting, and timed stages.",
+    longDesc: "A collaborative Unity VR assignment built with OpenXR and XR Interaction Toolkit. My contributions focused on Stage 1 level design, checkpoint placement, food assets and eating interactions, environmental audio, flag feedback, and the win scene.",
     categories: [ProjectCategory.GAMES, ProjectCategory.VR],
-    features: ["VR climbing with stamina feedback and checkpoints", "Climb timer, data logging, and leaderboard UI", "Grabbable objects and interactive consumables", "Painting tools with color selection and VR eraser", "Tutorial flow, narration, and audio feedback"],
-    techDetails: ["Unity URP and C# gameplay scripts", "XR Interaction Toolkit and OpenXR", "Oculus XR and Meta XR audio packages", "Custom climbing, painting, and stamina components"]
-  },
-  {
-    id: "cgp-assignment",
-    title: "Fly Me 2 The Earth",
-    cover: `${import.meta.env.BASE_URL}assets/projects/fly-me-menu.png`,
-    screenshots: [
-      { src: `${import.meta.env.BASE_URL}assets/projects/fly-me-menu.png`, label: "Main menu" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/fly-me-gameplay.png`, label: "Spaceflight gameplay with asteroids and linked portals" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/fly-me-pause.png`, label: "Pause menu with resume and restart controls" }
+    collaboration: "Three-person team",
+    contribution: "Stage design, checkpoints, food interaction, audio & win flow",
+    features: [
+      "VR climbing with hand stamina and checkpoint progression",
+      "Grabbable props, consumable food interactions, and tactile feedback",
+      "Timed stages with narration, audio cues, flags, and result screens",
+      "Painting tools with color selection and erasing",
     ],
-    tags: ["c++", "directx 9", "physics", "fmod", "directinput"],
-    code_links: [{ label: "GitHub", url: "https://github.com/KJiShou/CGP_Assignment", icon: CodeLinkIcon.TOOLS }],
-    deploy_link: "#",
-    desc: "A C++ game showcasing my reusable components built on DirectX 9: sprite rendering, animation, UI, input, physics, and scene management.",
-    longDesc: "My focus in this project was implementing reusable C++ game components directly on DirectX 9 and Win32. I built a GameObject abstraction for texture loading, sprite-sheet animation, transforms, and rendering; interactive Button, Label, and UI components; and supporting systems for DirectInput, physics, scene transitions, timing, and FMOD audio. Fly Me 2 The Earth brings these components together in a playable spaceflight game, demonstrating how the rendering and gameplay systems work together through asteroid navigation, linked portals, a countdown, and pause / restart controls.",
-    categories: [ProjectCategory.GAMES, ProjectCategory.GRAPHICS],
-    features: ["Reusable GameObject component for textures, transforms, and sprite-sheet animation", "Custom Button, Label, and UI components with hit testing and click callbacks", "Scene manager for initialization, transitions, pause, resume, and restart", "DirectInput wrapper for keyboard and mouse interaction", "PhysicsBody component for forces, velocity, acceleration, and collision response", "Frame timing, gameplay countdown, and FMOD sound management", "Playable spaceflight game integrating the custom components"],
-    techDetails: ["Direct3D 9 device setup and Win32 window / message handling", "D3DX sprite rendering with position, pivot, scale, rotation, and texture regions", "Sprite-sheet frame selection and explicit texture resource cleanup", "GameObject and PhysicsBody composition for gameplay entities", "Game scene lifecycle and shared SceneContext for rendering, input, audio, and UI", "DirectInput device acquisition and per-frame keyboard / mouse state polling", "Fixed timestep updates and FMOD background / positional audio"]
+    techDetails: [
+      "Unity URP, C#, XR Interaction Toolkit, and OpenXR",
+      "Oculus/Meta XR packages and spatial audio",
+      "Custom checkpoint, climbing, eating, and win-flow components",
+      "31 GitHub contributions under HongJunChea in the shared repository",
+    ],
   },
   {
     id: "accounting-mobile-app",
     title: "Accounting Mobile App",
-    cover: `${import.meta.env.BASE_URL}assets/projects/accounting-mobile-app.jpg`,
+    cover: asset("accounting-mobile-app.jpg"),
     screenshots: [
-      { src: `${import.meta.env.BASE_URL}assets/projects/accounting-mobile-app.jpg`, label: "Home" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/accounting-trending.jpeg`, label: "Trending" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/accounting-insights.jpg`, label: "Insights" }
+      { src: asset("accounting-mobile-app.jpg"), label: "Finance dashboard" },
+      { src: asset("accounting-trending.jpeg"), label: "Expense trends" },
+      { src: asset("accounting-insights.jpg"), label: "Asset and spending insights" },
     ],
-    tags: ["flutter", "dart", "sqlite", "supabase", "provider"],
-    code_links: [{ label: "GitHub", url: "https://github.com/KJiShou/Accounting-Mobile-App", icon: CodeLinkIcon.FULLSTACK }],
+    tags: ["Flutter", "Dart", "SQLite", "Supabase", "Provider"],
     deploy_link: "#",
-    desc: "An offline-first personal finance app for expenses, budgets, savings, and spending insights with cloud sync.",
-    longDesc: "A Flutter accounting application with local SQLite storage and optional Supabase cloud synchronization. Users manage income and expenses, categories, assets, savings goals, budgets, and recurring subscriptions. Charts and trend views help explain spending, while biometric authentication, shared transactions, and PDF export support everyday use.",
+    desc: "An offline-first personal-finance app for expenses, budgets, savings, assets, and spending insights.",
+    longDesc: "A collaborative Flutter mobile application with local SQLite storage and optional Supabase synchronization. The team implemented income and expense tracking, categories, budgets, savings goals, assets, recurring subscriptions, trend charts, authentication, sharing, and PDF export.",
     categories: [ProjectCategory.MOBILE],
-    features: ["Income and expense tracking with flexible categories", "Budgets, savings goals, assets, and subscriptions", "Interactive spending charts and trend analysis", "Offline storage with bidirectional cloud synchronization", "Biometric authentication, shared transactions, and PDF export"],
-    techDetails: ["Flutter and Dart with Provider / ChangeNotifier", "SQLite through sqflite and Supabase backend", "Repository-based data layer and Freezed models", "fl_chart, go_router, and local_auth"]
+    collaboration: "Team project",
+    contribution: "Flutter application development",
+    features: [
+      "Income and expense tracking with flexible categories",
+      "Budgets, savings goals, assets, and recurring subscriptions",
+      "Spending charts, trend analysis, and personal-finance insights",
+      "Offline-first SQLite storage with optional Supabase synchronization",
+    ],
+    techDetails: [
+      "Flutter and Dart with Provider/ChangeNotifier",
+      "SQLite through sqflite and Supabase backend services",
+      "Repository-based data layer with local and remote persistence",
+    ],
   },
   {
     id: "ai-assignment",
     title: "Adult Face Detection Studio",
-    cover: `${import.meta.env.BASE_URL}assets/projects/age-detection-cnn.png`,
+    cover: asset("age-detection-hog_svm.png"),
     screenshots: [
-      { src: `${import.meta.env.BASE_URL}assets/projects/age-detection-studio.png`, label: "Python desktop interface and model selection" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/age-detection-cnn.png`, label: "CNN image analysis and prediction result" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/age-detection-hog_svm.png`, label: "HOG + SVM image analysis and prediction result" },
-      { src: `${import.meta.env.BASE_URL}assets/projects/age-detection-vit.png`, label: "Vision Transformer image analysis and prediction result" }
+      { src: asset("age-detection-studio.png"), label: "Desktop interface and model selection" },
+      { src: asset("age-detection-hog_svm.png"), label: "HOG + SVM prediction" },
+      { src: asset("age-detection-cnn.png"), label: "CNN prediction" },
+      { src: asset("age-detection-vit.png"), label: "Vision Transformer prediction" },
     ],
-    tags: ["python", "tensorflow", "pytorch", "opencv", "scikit-learn"],
-    code_links: [{ label: "GitHub", url: "https://github.com/KJiShou/AI_Assignment", icon: CodeLinkIcon.TOOLS }],
+    tags: ["Python", "HOG", "SVM", "OpenCV", "scikit-learn"],
+    code_links: [{ label: "GitHub", url: "https://github.com/KJiShou/AI_Assignment", icon: CodeLinkIcon.SOURCE }],
     deploy_link: "#",
-    desc: "A three-model face-classification study and Python desktop app. My focus: Vision Transformer training and evaluation.",
-    longDesc: "A Python desktop application and notebook training pipeline for experimental adult/minor face classification. The run.py entry point brings a TensorFlow / Keras CNN, HOG features with a scikit-learn SVM, and a PyTorch Vision Transformer into one CustomTkinter interface. Users load a trained model and upload an image or capture webcam samples. OpenCV selects the largest detected face, and the app displays an annotated preview, predicted class, model score, and decision confidence. The screenshots show actual runs of the three original trained models on the same project test image; their predictions can differ.",
-    categories: [ProjectCategory.AI],
-    features: ["Compare HOG + SVM, MobileNetV2 CNN, and Vision Transformer", "Project-defined Adult class uses age 21 and above", "Single-image upload and webcam sample capture", "OpenCV face detection with annotated prediction previews", "Overall and 18–24 age-boundary evaluation", "Separate training and test notebooks with saved metrics", "CustomTkinter desktop interface and Windows packaging"],
-    techDetails: ["PyTorch ViT-B/16 with ImageNet transfer learning", "Two-stage ViT training: adapt the head, then fine-tune the last four backbone blocks", "AdamW, mixed precision, and validation-tuned decision threshold", "TensorFlow / Keras MobileNetV2 CNN", "scikit-image HOG features with scikit-learn SVM", "OpenCV Haar cascade face detection", "CustomTkinter GUI and PyInstaller packaging"],
+    desc: "A three-model adult/minor face-classification study and desktop app; my focus was the HOG + SVM pipeline.",
+    longDesc: "A three-person machine-learning project comparing HOG + SVM, a MobileNetV2 CNN, and a Vision Transformer. I owned the HOG + SVM training notebook and evaluation pipeline, including HOG feature extraction, SVM training, saved model artifacts, metrics, and test reporting. The team integrated all three models into a CustomTkinter application with OpenCV face detection.",
+    categories: [ProjectCategory.AI, ProjectCategory.DESKTOP],
+    collaboration: "Three-person team",
+    contribution: "HOG + SVM training, feature extraction & evaluation",
+    features: [
+      "Side-by-side comparison of HOG + SVM, CNN, and Vision Transformer models",
+      "Single-image upload and webcam face capture",
+      "OpenCV face detection with annotated prediction previews",
+      "Overall and age-boundary evaluation with saved metrics",
+    ],
+    techDetails: [
+      "scikit-image HOG feature extraction and scikit-learn SVM",
+      "OpenCV Haar Cascade face detection",
+      "CustomTkinter desktop interface and PyInstaller packaging",
+      "TensorFlow/Keras CNN and PyTorch ViT modules contributed by teammates",
+    ],
     evaluation: {
-      contribution: "I was responsible for the Vision Transformer (ViT) module in a three-person team, covering its model training and evaluation pipeline. The team compared ViT with the CNN and HOG + SVM approaches.",
+      contribution: "I was responsible for the HOG + SVM model: feature extraction, training, saved artifacts, metrics, and evaluation. The team compared it with independently developed CNN and ViT pipelines.",
       methodology: [
-        "Facial images derived from MegaAge and UTKFace, with Asian and non-Asian groups.",
-        "Binary classification with a project-defined age cutoff of 21; a separate analysis examines ages 18–24.",
-        "ViT-B/16 uses 224 × 224 inputs and ImageNet-pretrained weights. Initial training freezes the backbone; fine-tuning unfreezes its last four blocks.",
-        "ViT configuration: AdamW, 10 epochs per stage, learning rates of 0.001 and 0.00001, mixed precision, and a saved decision threshold of 0.457286."
+        "Facial images derived from MegaAge and UTKFace, covering Asian and non-Asian groups.",
+        "Binary adult/minor classification with a project-defined age cutoff of 21.",
+        "HOG descriptors capture local edge and gradient structure before SVM classification.",
+        "A separate age-boundary analysis evaluates the especially difficult 18-24 range.",
       ],
       testSamples: 3945,
       boundarySamples: 690,
       results: [
         { model: "HOG + SVM", accuracy: 63.78, precision: 76.53, recall: 42.60, f1: 54.74 },
         { model: "CNN", accuracy: 73.97, precision: 93.18, recall: 53.25, f1: 67.78 },
-        { model: "ViT", accuracy: 84.21, precision: 92.60, recall: 75.30, f1: 83.06 }
+        { model: "ViT", accuracy: 84.21, precision: 92.60, recall: 75.30, f1: 83.06 },
       ],
       boundaryResults: [
         { model: "HOG + SVM", accuracy: 44.93, precision: 76.96, recall: 32.04, f1: 45.24 },
         { model: "CNN", accuracy: 48.41, precision: 85.64, recall: 32.86, f1: 47.49 },
-        { model: "ViT", accuracy: 57.83, precision: 81.19, recall: 52.86, f1: 64.03 }
+        { model: "ViT", accuracy: 57.83, precision: 81.19, recall: 52.86, f1: 64.03 },
       ],
-      findings: "ViT achieved the highest overall accuracy (84.21%) and F1 (83.06%), while CNN had the highest precision (93.18%). All three models performed worse on ages 18–24; ViT accuracy fell to 57.83%, showing the difficulty of classifying faces near the chosen age cutoff. Values were checked against the original saved test metrics, rather than individual desktop demo predictions.",
+      findings: "The classical HOG + SVM baseline reached 63.78% overall accuracy. Every model performed worse near the age boundary, showing how difficult apparent-age classification becomes around the selected cutoff.",
       limitations: [
-        "Age-group imbalance, label noise, lighting, pose, and image quality affect generalization.",
-        "These results describe the project's test set; facial appearance alone does not establish a person's age.",
-        "Future work: improve boundary-age data quality, evaluate on additional datasets, and benchmark inference speed and model compression."
-      ]
-    }
+        "Facial appearance alone does not establish a person’s age.",
+        "Class imbalance, label noise, pose, lighting, and image quality affect generalization.",
+        "Results describe the project test set and should not be used for high-stakes decisions.",
+      ],
+    },
   },
-  {
-    id: "graphic-programming-assignment",
-    title: "3D Robot Simulation",
-    cover: `${import.meta.env.BASE_URL}assets/projects/graphic-programming.png`,
-    tags: ["c++", "opengl", "graphics", "3d", "directinput"],
-    code_links: [
-      { label: "GitHub", url: "https://github.com/KJiShou/GraphicProgrammingAssignment", icon: CodeLinkIcon.TOOLS }
-    ],
-    deploy_link: "#",
-    desc: "Hierarchical 3D robot simulation in C++ and OpenGL with custom animation and camera modes.",
-    longDesc: "A graphics programming assignment focused on building a hierarchical 3D robot from scratch in C++ and OpenGL. The project implements articulated body parts, a state-driven animation system, and a custom input manager. Multiple camera projections and lighting features showcase a raw rendering pipeline.",
-    categories: [ProjectCategory.GRAPHICS],
-    features: [
-      "Hierarchical modeling with parent-child body parts",
-      "State-based animation for locomotion and combat moves",
-      "Custom input layer integrating DirectInput and Windows input",
-      "Perspective, orthographic, and frustum camera modes",
-      "Lighting and texture mapping with OpenGL primitives",
-      "Fine-grained articulation for hands, fingers, and wings"
-    ],
-    techDetails: [
-      "C++ with a raw OpenGL rendering pipeline",
-      "Scene graph style transforms for articulated animation",
-      "GL_LIGHT0 lighting setup and texture mapping",
-      "Multi-mode camera system with projection toggles",
-      "Configurable input bindings for movement and articulation"
-    ]
-  },
-  {
-    id: "sport-stacking-website",
-    title: "Sport Stacking Website",
-    cover: `${import.meta.env.BASE_URL}assets/projects/sport-stacking.png`,
-    tags: ["react", "typescript", "firebase", "tailwindcss", "vite"],
-    code_links: [
-      { label: "GitHub", url: "https://github.com/KJiShou/Sport-Stacking-Website", icon: CodeLinkIcon.FULLSTACK }
-    ],
-    deploy_link: "#",
-    desc: "Full-stack tournament management platform for sport stacking events, scoring, and athlete profiles.",
-    longDesc: "A comprehensive web application for managing sport stacking tournaments, brackets, and results. It supports registration, preliminary and finals scoring, and detailed athlete profiles with role-based access for organizers and admins. Built to streamline event-day operations with exports and responsive UI.",
-    categories: [ProjectCategory.WEB],
-    features: [
-      "Tournament creation with events, brackets, and classifications",
-      "Preliminary and finals scoring with automatic rankings",
-      "Athlete profiles, global IDs, and performance history",
-      "Online registration with team and multi-event support",
-      "PDF export of results, brackets, and classifications",
-      "Admin dashboard with role-based access and site settings"
-    ],
-    techDetails: [
-      "React 18, Vite, and TypeScript for the frontend",
-      "Arco Design components, Tailwind CSS, and SCSS styling",
-      "React Router v6 and Jotai state management",
-      "Firebase Auth, Firestore, Functions, Hosting, and Storage",
-      "React Hook Form with Zod validation",
-      "jsPDF and AutoTable for report generation"
-    ]
-  },
-  {
-    id: "chichis-bizarre-adventure",
-    title: "Chichi's Bizarre Adventure",
-    cover: `${import.meta.env.BASE_URL}assets/projects/3D-Game.png`,
-    tags: ["unity", "c#", "3d", "urp", "cinemachine"],
-    code_links: [
-      { label: "GitHub", url: "https://github.com/KJiShou/3D-Game-Development", icon: CodeLinkIcon.TOOLS }
-    ],
-    deploy_link: "#",
-    desc: "Unity URP 3D adventure and puzzle game with parkour traversal and island exploration.",
-    longDesc: "A third-person Unity URP game where players explore an island, solve puzzles, and gather resources to repair a broken bridge. The experience blends parkour traversal, environment interaction, and story-driven objectives as Chichi searches for a missing friend.",
-    categories: [ProjectCategory.GAMES],
-    features: [
-      "Third-person movement with walk, run, and jump controls",
-      "Parkour obstacles and platforming traversal",
-      "Puzzle exploration and environment interaction",
-      "Resource collection and bridge repair objectives",
-      "Camera control and combat-ready input bindings",
-      "Integrated menus for settings and gameplay flow"
-    ],
-    techDetails: [
-      "Built with Unity URP and C# scripting",
-      "Starter Assets ThirdPerson controller with Cinemachine",
-      "Unity new Input System for character controls",
-      "Asset packs for characters and environment visuals",
-      "Particle effects from Unity Asset Store packages"
-    ]
-  },
-  {
-    id: "desmos-lifeline",
-    title: "Desmos Lifeline",
-    cover: `${import.meta.env.BASE_URL}assets/projects/2D-game.png`,
-    tags: ["unity", "c#", "2d", "equations", "linerenderer"],
-    code_links: [
-      { label: "GitHub", url: "https://github.com/KJiShou/Desmos-Lifeline", icon: CodeLinkIcon.TOOLS }
-    ],
-    deploy_link: "#",
-    desc: "Unity 2D math game where players build equations to guide a spaceship through portals.",
-    longDesc: "A Unity 2D game centered on creating and tuning equations to shape the player's path. Linear, quadratic, and trigonometric curves are rendered in real time, with portals placed along each line to move the ship between points. The game includes stage selection, difficulty settings, score tracking, and multiple UI flows for win, loss, and pause states.",
-    categories: [ProjectCategory.GAMES],
-    features: [
-      "Equation selection with drag-and-drop slot inputs",
-      "Real-time linear, quadratic, and trigonometric curve rendering",
-      "Portal system that moves the ship along generated lines",
-      "Stage-based progression with score tracking",
-      "Difficulty settings and spaceship customization",
-      "Menus for stage select, pause, victory, and loss states"
-    ],
-    techDetails: [
-      "Unity 2D project written in C#",
-      "LineRenderer-driven equation visualization",
-      "TMP text and slider inputs for equation parameters",
-      "Persistent GameManager for stage scores and settings",
-      "Audio and UI settings for player feedback"
-    ]
-  }
 ];
+

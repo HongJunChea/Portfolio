@@ -7,8 +7,8 @@ import NotFound from "./components/404.tsx";
 import ProjectDetail from "./components/ProjectDetail.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <div className="bg-[#0a072c]">
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+  <div>
+    <BrowserRouter basename={import.meta.env.BASE_URL} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Navbar />
       <Routes>
         <Route path="/" element={<App />} />

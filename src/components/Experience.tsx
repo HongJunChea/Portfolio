@@ -1,112 +1,53 @@
-import { FaRocket, FaGraduationCap } from "react-icons/fa";
-import { motion } from "framer-motion";
-import { cn } from "../lib/utils";
+import { FaArrowUpRightFromSquare, FaHeadset, FaGraduationCap } from "react-icons/fa6";
 
-const experienceData = [
+const timeline = [
   {
-    title: "Bachelor of Computer Science (Honours)",
-    company: "TARUMT - Interactive Software Technology",
-    period: "June 2026 - Present",
-    icon: <FaGraduationCap className="text-xl" />,
-    description: "Currently pursuing Bachelor's degree specializing in Interactive Software Technology",
-    skills: ["Python", "C++ (DirectX)", "OpenGL", "C# for Unity", "Unity", "Game Development"],
-    color: "neon-skyblue",
-    status: "active"
+    period: "Jun 2025 — Expected Jun 2027",
+    title: "BSc (Hons) Computer Science",
+    place: "TAR UMT · Interactive Software Technology · CGPA 3.44/4.00",
+    detail: "Specializing in games, interactive systems, graphics, AI, and parallel computing.",
+    icon: <FaGraduationCap />,
   },
   {
-    title: "Programmer Intern",
-    company: "Enlliance Management Sdn. Bhd.",
-    period: "October 2024 - January 2025",
-    icon: <FaRocket className="text-xl" />,
-    description: "Built backend logic in Go and developed frontend pages with React and TypeScript",
-    skills: ["Go", "TypeScript", "React", "Web Development", "API Integration"],
-    color: "neon-green",
-    status: "completed"
+    period: "Oct 2024 — Jan 2025",
+    title: "IT Support",
+    place: "Alpine Technology Sdn Bhd",
+    detail: "Handled customer-reported software issues and guided users through troubleshooting steps to restore normal use.",
+    icon: <FaHeadset />,
   },
   {
+    period: "Jun 2023 — May 2025",
     title: "Diploma in Computer Science",
-    company: "TARUMT",
-    period: "June 2023 - June 2025",
-    icon: <FaGraduationCap className="text-xl" />,
-    description: "Completed comprehensive foundation in computer science and software development",
-    skills: ["C Programming", "HTML", "CSS", "JavaScript", "SQL", "Unity"],
-    color: "neon-cyan",
-    status: "completed"
+    place: "TAR UMT · CGPA 3.42/4.00",
+    detail: "Built foundations in programming, databases, web development, software design, and Unity.",
+    icon: <FaGraduationCap />,
   },
 ];
 
-export const Experience = () => {
-  return (
-    <motion.div 
-      className="relative w-full"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
-    >
-      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-neon-blue via-neon-cyan to-neon-blue"></div>
-      
-      <div className="space-y-12">
-        {experienceData.map((exp, index) => (
-          <motion.div
-            key={index}
-            className="relative"
-            initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
-            viewport={{ once: true }}
-          >
-            <div className={`flex items-center ${index % 2 === 0 ? "flex-row" : "flex-row-reverse"} gap-8`}>
-              <div
-                className={`w-1/2 ${
-                  index % 2 === 0 ? "text-right pr-12" : "text-left pl-12"
-                }`}
-              >
-                <motion.div
-                  className={cn(
-                    "glass-strong rounded-xl p-6 border",
-                    `border-${exp.color}/30 hover:border-${exp.color} transition-all duration-300`
-                  )}
-                  whileHover={{ scale: 1.02, y: -5 }}
-                >
-                  <div className={cn("text-2xl font-cyber font-bold mb-2", `text-${exp.color} neon-text`)}>
-                    {exp.title}
-                  </div>
-                  <div className="text-neon-cyan font-tech mb-2">{exp.company}</div>
-                  <div className="text-neon-blue/70 text-sm mb-3 font-futura">{exp.period}</div>
-                  <p className="text-gray-300 mb-4 font-futura">{exp.description}</p>
-                  <div className={`flex flex-wrap gap-2 ${index % 2 === 0 ? "justify-end" : "justify-start"}`}>
-                    {exp.skills.map((skill, i) => (
-                      <span 
-                        key={i}
-                        className={cn(
-                          "px-3 py-1 text-xs font-tech rounded-full border",
-                          `bg-${exp.color}/10 text-${exp.color} border-${exp.color}/30`
-                        )}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              </div>
-              
-              <div className="absolute left-1/2 transform -translate-x-1/2">
-                <motion.div
-                  className={cn(
-                    "w-16 h-16 rounded-full glass-strong border-4 flex items-center justify-center",
-                    `border-${exp.color} text-${exp.color}`
-                  )}
-                  whileHover={{ scale: 1.2, rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {exp.icon}
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+export const Experience = () => (
+  <section className="section about-section" id="about-section">
+    <div className="page-width about-grid">
+      <div className="about-copy">
+        <p className="eyebrow">About / experience</p>
+        <h2>I like the part where ideas become systems.</h2>
+        <p className="about-lead">My work is hands-on: build the mechanic, test the edge cases, listen for what feels off, and keep improving it.</p>
+        <p>I’m interested in game development, QA testing, and software engineering. My team projects have taught me how to work across gameplay, UI, audio, data, level design, and machine-learning pipelines while keeping changes reviewable through Git.</p>
+        <a className="text-link" href="https://www.linkedin.com/in/hong-jun-chea-769516296" target="_blank" rel="noreferrer">View LinkedIn <FaArrowUpRightFromSquare /></a>
+        <aside className="research-note">
+          <span>Internship search</span>
+          <strong>Available January-June 2027</strong>
+          <p>Seeking opportunities in Kuala Lumpur across game development, QA testing, or software engineering.</p>
+        </aside>
       </div>
-    </motion.div>
-  );
-};
+      <ol className="timeline">
+        {timeline.map((item) => (
+          <li key={item.title}>
+            <div className="timeline-icon">{item.icon}</div>
+            <div><span>{item.period}</span><h3>{item.title}</h3><strong>{item.place}</strong><p>{item.detail}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+);
+
