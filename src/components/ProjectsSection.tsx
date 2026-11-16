@@ -22,8 +22,8 @@ const ProjectsSection = ({ projects }: { projects: project[] }) => {
         </div>
 
         <div className="team-intro">
-          <div><p className="eyebrow">Shared collaborations</p><h2>The four projects from the reference.</h2></div>
-          <p>I participated in all four projects shown in Kong Ji Shou’s portfolio. These cards present them from my side, highlighting my own implementation work where the shared repositories and project files provide evidence.</p>
+          <div><p className="eyebrow">Shared collaborations</p><h2>Team projects, presented from my side.</h2></div>
+          <p>I collaborated on these four projects across AI game systems, VR interaction, mobile development, and machine learning. Each card highlights my own implementation work, based on the shared repositories and project files.</p>
         </div>
         <div className="team-grid">
           {shared.map((item) => <ProjectCard key={item.id} project={item} variant="team" />)}
